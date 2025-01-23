@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmoothOp8r</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #111111;
+            /* Dark grey background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Transparent Navbar */
+        .navbar {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            /* Glassmorphism */
+            padding: 10px;
+            text-align: center;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            aspect-ratio: 9 / 16;
+            /* Vertical TikTok-style video */
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: black;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Tap to Unmute Overlay */
+        /* Mute/Unmute Button */
+        .mute-overlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mute-overlay img {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: white;
+            text-align: center;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Transparent Navbar with Title -->
+    <div class="navbar">SmoothOp8r.com</div>
+
+    <div class="video-container">
+        <video id="reelVideo" autoplay muted playsinline loop>
+            <source src="smoothop8r.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Tap to Unmute Button -->
+        <div id="muteOverlay" class="mute-overlay">
+            <img id="muteIcon" src="mute.png" alt="Mute Icon">
+            Tap to Unmute
+        </div>
+
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        Made with ❤️ by <a href="https://animeshchouhan.com" target="_blank">animeshchouhan.com</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const video = document.getElementById("reelVideo");
+            const muteOverlay = document.getElementById("muteOverlay");
+
+            // Ensure autoplay starts muted (allowed by browsers)
+            video.play().catch(error => console.log("Muted autoplay allowed:", error));
+
+            // Unmute when the user taps the video or overlay
+            function unmuteVideo() {
+                video.muted = false;
+                video.play();
+                muteOverlay.style.opacity = "0"; // Fade out
+                setTimeout(() => muteOverlay.style.display = "none", 300); // Hide after fade
+            }
+
+            muteOverlay.addEventListener("click", unmuteVideo);
+            video.addEventListener("click", unmuteVideo);
+        });
+    </script>
+</body>
+
+</html>
